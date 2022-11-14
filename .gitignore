@@ -163,3 +163,12 @@ Lab1_HAN/data.zip
 Lab1_HAN/__MACOSX/
 Lab1_HAN/data/
 Lab1_HAN/best_model.pt
+Lab2_TransferLearning/dict.txt
+Lab2_TransferLearning/pretrained_model_4layers.pt
+Lab2_TransferLearning/pretraining_subset.txt
+Lab2_TransferLearning/pretrained_model_4layers_no_class_head.pt
+Lab2_TransferLearning/sentencepiece.french.model
+Lab2_TransferLearning/test.label
+Lab2_TransferLearning/test.review.spm
+Lab2_TransferLearning/train.label
+Lab2_TransferLearning/train.review.spm
