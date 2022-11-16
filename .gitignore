@@ -172,3 +172,9 @@ Lab2_TransferLearning/test.label
 Lab2_TransferLearning/test.review.spm
 Lab2_TransferLearning/train.label
 Lab2_TransferLearning/train.review.spm
+Lab3/altegrad.lab3/checkpoints
+Lab3/altegrad.lab3/data
+Lab3/altegrad.lab3/data-bin
+Lab3/altegrad.lab3/libs
+Lab3/altegrad.lab3/models
+Lab3/altegrad.lab3/tensorboard_logs

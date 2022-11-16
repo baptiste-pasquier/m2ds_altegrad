@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "altegrad-lab3"
+version = "0.1.0"
+description = ""
+authors = ["Baptiste Pasquier <pasquierbaptiste@hotmail.fr>"]
+readme = "README.md"
+packages = [{include = "altegrad"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^5.0.4"
+black = {extras = ["jupyter"], version = "^22.10.0"}
+ipykernel = "^6.17.1"
+ipywidgets = ">=7.0,<8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
