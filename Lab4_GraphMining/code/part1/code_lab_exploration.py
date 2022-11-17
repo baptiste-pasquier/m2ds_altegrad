@@ -14,13 +14,11 @@ import numpy as np
 ##################
 
 
-
 ############## Task 2
 
 ##################
 # your code here #
 ##################
-
 
 
 ############## Task 3
@@ -32,14 +30,11 @@ degree_sequence = [G.degree(node) for node in G.nodes()]
 ##################
 
 
-
 ############## Task 4
 
 ##################
 # your code here #
 ##################
-
-
 
 
 ############## Task 5
