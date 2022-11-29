@@ -6,8 +6,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class GNN(nn.Module):
-    def __init__(self, input_dim, hidden_dim_1, hidden_dim_2, hidden_dim_3, n_class, device):
+    def __init__(
+        self, input_dim, hidden_dim_1, hidden_dim_2, hidden_dim_3, n_class, device
+    ):
         super(GNN, self).__init__()
         self.device = device
         self.fc1 = nn.Linear(input_dim, hidden_dim_1)
@@ -17,17 +20,17 @@ class GNN(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x_in, adj, idx):
-        
+
         ############## Task 6
-    
+
         ##################
         # your code here #
         ##################
-        
+
         idx = idx.unsqueeze(1).repeat(1, x.size(1))
-        out = torch.zeros(torch.max(idx)+1, x.size(1)).to(self.device)
-        out = out.scatter_add_(0, idx, x) 
-        
+        out = torch.zeros(torch.max(idx) + 1, x.size(1)).to(self.device)
+        out = out.scatter_add_(0, idx, x)
+
         ##################
         # your code here #
         ##################

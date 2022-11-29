@@ -44,7 +44,7 @@ loss_function = nn.CrossEntropyLoss()
 for epoch in range(epochs):
     t = time.time()
     model.train()
-    
+
     train_loss = 0
     correct = 0
     count = 0
@@ -54,11 +54,11 @@ for epoch in range(epochs):
         y_batch = list()
 
         ############## Task 7
-        
+
         ##################
         # your code here #
         ##################
-        
+
         optimizer.zero_grad()
         output = model(features_batch, adj_batch, idx_batch)
         loss = loss_function(output, y_batch)
@@ -68,14 +68,16 @@ for epoch in range(epochs):
         correct += torch.sum(preds.eq(y_batch).double())
         loss.backward()
         optimizer.step()
-    
+
     if epoch % 10 == 0:
-        print('Epoch: {:04d}'.format(epoch+1),
-              'loss_train: {:.4f}'.format(train_loss / count),
-              'acc_train: {:.4f}'.format(correct / count),
-              'time: {:.4f}s'.format(time.time() - t))
-        
-print('Optimization finished!')
+        print(
+            "Epoch: {:04d}".format(epoch + 1),
+            "loss_train: {:.4f}".format(train_loss / count),
+            "acc_train: {:.4f}".format(correct / count),
+            "time: {:.4f}s".format(time.time() - t),
+        )
+
+print("Optimization finished!")
 
 # Evaluates the model
 model.eval()
@@ -88,7 +90,7 @@ for i in range(0, N_test, batch_size):
     y_batch = list()
 
     ############## Task 7
-    
+
     ##################
     # your code here #
     ##################
@@ -100,6 +102,8 @@ for i in range(0, N_test, batch_size):
     preds = output.max(1)[1].type_as(y_batch)
     correct += torch.sum(preds.eq(y_batch).double())
 
-print('loss_test: {:.4f}'.format(test_loss / count),
-      'acc_test: {:.4f}'.format(correct / count),
-      'time: {:.4f}s'.format(time.time() - t))
+print(
+    "loss_test: {:.4f}".format(test_loss / count),
+    "acc_test: {:.4f}".format(correct / count),
+    "time: {:.4f}s".format(time.time() - t),
+)
