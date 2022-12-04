@@ -15,16 +15,16 @@ def random_walk(G, node, walk_length):
     ##################
     # your code here #
     ##################
-    
-	walk = [str(node) for node in walk]
-	return walk
+
+    walk = [str(node) for node in walk]
+    return walk
 
 
 ############## Task 2
 # Runs "num_walks" random walks from each node
 def generate_walks(G, num_walks, walk_length):
     walks = []
-    
+
     ##################
     # your code here #
     ##################

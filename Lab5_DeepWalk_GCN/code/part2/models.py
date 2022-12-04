@@ -6,8 +6,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class GNN(nn.Module):
     """Simple GNN model"""
+
     def __init__(self, n_feat, n_hidden_1, n_hidden_2, n_class, dropout):
         super(GNN, self).__init__()
 
@@ -19,10 +21,9 @@ class GNN(nn.Module):
 
     def forward(self, x_in, adj):
         ############## Tasks 10 and 13
-        
+
         ##################
         # your code here #
         ##################
-
 
         return F.log_softmax(x, dim=1)
