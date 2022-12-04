@@ -52,6 +52,7 @@ adj = normalize_adjacency(adj)  # Normalizes the adjacency matrix
 ############## Task 12
 # Set the feature of all nodes to the same value
 features = np.eye(n)  # Generates node features
+features = np.ones((n, 1))
 
 
 # Yields indices to split data into training and test sets
@@ -76,7 +77,7 @@ def train(epoch):
     t = time.time()
     model.train()
     optimizer.zero_grad()
-    output = model(features, adj)
+    output, _ = model(features, adj)
     loss_train = F.nll_loss(output[idx_train], y[idx_train])
     acc_train = accuracy_score(
         torch.argmax(output[idx_train], dim=1).detach().cpu().numpy(),
@@ -95,7 +96,7 @@ def train(epoch):
 
 def test():
     model.eval()
-    output = model(features, adj)
+    output, _ = model(features, adj)
     loss_test = F.nll_loss(output[idx_test], y[idx_test])
     acc_test = accuracy_score(
         torch.argmax(output[idx_test], dim=1).detach().cpu().numpy(),

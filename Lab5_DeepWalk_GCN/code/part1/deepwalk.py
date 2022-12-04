@@ -14,10 +14,15 @@ def random_walk(G, node, walk_length):
 
     ##################
     # your code here #
-    ##################
-
+    walk = [node]
+    # print(list(G.nodes()))
+    for i in range(walk_length):
+        neighbors = list(G.neighbors(walk[i]))
+        index_new_node = randint(0, len(neighbors) - 1)
+        walk.append(neighbors[index_new_node])
     walk = [str(node) for node in walk]
     return walk
+    ##################
 
 
 ############## Task 2
@@ -27,6 +32,10 @@ def generate_walks(G, num_walks, walk_length):
 
     ##################
     # your code here #
+    for _ in range(num_walks):
+        for node in list(G.nodes()):
+            walks.append(random_walk(G, node, walk_length))
+    permuted_walks = np.random.permutation(walks)
     ##################
 
     return permuted_walks.tolist()

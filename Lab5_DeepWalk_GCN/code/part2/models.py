@@ -24,6 +24,17 @@ class GNN(nn.Module):
 
         ##################
         # your code here #
+        z1 = self.fc1(x_in)
+        z1 = torch.mm(adj, z1)
+        z1 = self.relu(z1)
+        z1 = self.dropout(z1)
+
+        z2 = self.fc2(z1)
+        z2 = torch.mm(adj, z2)
+        out = z2.detach().clone()
+        z2 = self.relu(z2)
+
+        x = self.fc3(z2)
         ##################
 
-        return F.log_softmax(x, dim=1)
+        return F.log_softmax(x, dim=1), out

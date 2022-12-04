@@ -116,6 +116,7 @@ embeddings_test = test()
 
 ##################
 # your code here #
+embeddings_test = embeddings_test.detach().cpu().numpy()
 ##################
 
 
@@ -123,10 +124,12 @@ embeddings_test = test()
 
 ##################
 # your code here #
+my_tsne = TSNE(n_components=2)
+embeddings_test_2d = my_tsne.fit_transform(embeddings_test)
 ##################
 
 
-labels = class_labels[idx_test]
+labels = class_labels[idx_test.cpu()]
 unique_labels = np.unique(labels)
 
 colors = ["b", "g", "r", "c", "m", "y", "k"]
@@ -146,4 +149,5 @@ for i in range(unique_labels.size):
 ax.legend(scatterpoints=1)
 fig.suptitle("T-SNE Visualization of the nodes of the test set", fontsize=12)
 fig.set_size_inches(15, 9)
+plt.savefig("embeddings_cora.pdf")
 plt.show()

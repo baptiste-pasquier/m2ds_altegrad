@@ -13,6 +13,12 @@ def normalize_adjacency(A):
 
     ##################
     # your code here #
+    n = A.shape[0]
+    A += sp.identity(n)
+    degs = A.dot(np.ones(n))
+    degs = degs**-0.5
+    D = sp.diags(degs)
+    A_normalized = D @ A @ D
     ##################
 
     return A_normalized
