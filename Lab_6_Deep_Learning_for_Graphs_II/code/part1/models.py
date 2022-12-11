@@ -13,7 +13,7 @@ class GATLayer(nn.Module):
     def __init__(self, n_feat, n_hidden, alpha=0.05):
         super(GATLayer, self).__init__()
         self.fc = nn.Linear(n_feat, n_hidden, bias=False)
-        self.a = nn.Linear(2 * n_hidden, 1)
+        self.a = nn.Linear(2 * n_hidden, 1, bias=False)
         self.leakyrelu = nn.LeakyReLU(alpha)
 
     def forward(self, x, adj):
@@ -22,8 +22,23 @@ class GATLayer(nn.Module):
 
         ##################
         # your code here #
+        # 1. Update node features
+        z = self.fc(x)  # equivalent to the multiplication Wzi
+
+        # 2. Extract all pairs of nodes connected by an edge
+        indices = adj.coalesce().indices()
+
+        # 3. Retrieve representations and concatenate
+        h = torch.cat((z[indices[0, :], :], z[indices[1, :], :]), dim=1)
+
+        # 4. Compute self-attention
+        h = self.a(h)
+
+        # 5. Apply Leaky ReLU
+        h = self.leakyrelu(h)
         ##################
 
+        # 6. Softmax
         h = torch.exp(h.squeeze())
         unique = torch.unique(indices[0, :])
         t = torch.zeros(unique.size(0), device=x.device)
@@ -33,9 +48,12 @@ class GATLayer(nn.Module):
         adj_att = torch.sparse.FloatTensor(
             indices, alpha, torch.Size([x.size(0), x.size(0)])
         ).to(x.device)
+        # adj_att = A . T
 
         ##################
         # your code here #
+        # 7. Message passing
+        out = torch.sparse.mm(adj_att, z)
         ##################
 
         return out, alpha
@@ -58,6 +76,18 @@ class GNN(nn.Module):
 
         ##################
         # your code here #
+        # 1. First message passing layer
+        z1, _ = self.mp1(x, adj)
+        z1 = self.relu(z1)
+        z1 = self.dropout(z1)
+
+        # 2. Second message passing layer
+        z2, alpha = self.mp2(z1, adj)
+        z2 = self.relu(z2)
+        z2 = self.dropout(z2)
+
+        # 3. Hidden dimension => number of classess
+        x = self.fc(z2)
         ##################
 
-        return F.log_softmax(x, dim=1)
+        return F.log_softmax(x, dim=1), alpha

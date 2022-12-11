@@ -16,6 +16,16 @@ def create_dataset():
 
     ##################
     # your code here #
+    for i in range(50):
+        n = randint(10, 20)
+        G = nx.fast_gnp_random_graph(n, 0.2)
+        Gs.append(G)
+        y.append(0)
+
+        n = randint(10, 20)
+        G = nx.fast_gnp_random_graph(n, 0.4)
+        Gs.append(G)
+        y.append(1)
     ##################
 
     return Gs, y

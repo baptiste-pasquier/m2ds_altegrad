@@ -57,6 +57,23 @@ for epoch in range(epochs):
 
         ##################
         # your code here #
+        adj_batch_list = [
+            nx.adjacency_matrix(graph) for graph in G_train[i : i + batch_size]
+        ]
+        adj_batch = sp.block_diag(adj_batch_list)
+        adj_batch = sparse_mx_to_torch_sparse_tensor(adj_batch).to(device)
+
+        features_batch = torch.ones(adj_batch.shape[0], 1).to(device)
+
+        idx_batch = []
+        j = 0
+        for adj_matrix in adj_batch_list:
+            idx_batch += [j] * adj_matrix.shape[0]
+            j += 1
+        idx_batch = torch.LongTensor(idx_batch).to(device)
+
+        y_batch = y_train[i : i + batch_size]
+        y_batch = torch.LongTensor(y_batch).to(device)
         ##################
 
         optimizer.zero_grad()
@@ -93,6 +110,23 @@ for i in range(0, N_test, batch_size):
 
     ##################
     # your code here #
+    adj_batch_list = [
+        nx.adjacency_matrix(graph) for graph in G_test[i : i + batch_size]
+    ]
+    adj_batch = sp.block_diag(adj_batch_list)
+    adj_batch = sparse_mx_to_torch_sparse_tensor(adj_batch).to(device)
+
+    features_batch = torch.ones(adj_batch.shape[0], 1).to(device)
+
+    idx_batch = []
+    j = 0
+    for adj_matrix in adj_batch_list:
+        idx_batch += [j] * adj_matrix.shape[0]
+        j += 1
+    idx_batch = torch.LongTensor(idx_batch).to(device)
+
+    y_batch = y_test[i : i + batch_size]
+    y_batch = torch.LongTensor(y_batch).to(device)
     ##################
 
     output = model(features_batch, adj_batch, idx_batch)

@@ -25,14 +25,29 @@ class GNN(nn.Module):
 
         ##################
         # your code here #
+        # 1. First message passing layer
+        a_tilde = torch.eye(adj.shape[0]).to(self.device) + adj
+        z1 = a_tilde @ x_in
+        z1 = self.fc1(z1)
+        z1 = self.relu(z1)
+
+        # 2. Second message passing layer
+        z2 = a_tilde @ z1
+        z2 = self.fc2(z2)
+
+        x = z2
         ##################
 
+        # 3. READOUT
         idx = idx.unsqueeze(1).repeat(1, x.size(1))
         out = torch.zeros(torch.max(idx) + 1, x.size(1)).to(self.device)
         out = out.scatter_add_(0, idx, x)
 
         ##################
         # your code here #
+        out = self.fc3(out)
+        out = self.relu(out)
+        out = self.fc4(out)
         ##################
 
         return F.log_softmax(out, dim=1)
