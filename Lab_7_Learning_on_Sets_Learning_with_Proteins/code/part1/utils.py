@@ -10,7 +10,7 @@ def create_train_dataset():
     max_train_card = 10
 
     ############## Task 1
-    
+
     ##################
     # your code here #
     ##################
@@ -19,9 +19,9 @@ def create_train_dataset():
 
 
 def create_test_dataset():
-    
+
     ############## Task 2
-    
+
     ##################
     # your code here #
     ##################

@@ -36,18 +36,18 @@ loss_function = nn.L1Loss()
 for epoch in range(epochs):
     t = time.time()
     deepsets.train()
-     
+
     train_loss = 0
     count = 0
     idx = np.random.permutation(n_train)
     for i in range(0, n_train, batch_size):
-        
+
         ############## Task 5
-    
+
         ##################
         # your code here #
         ##################
-        
+
         optimizer.zero_grad()
         output = deepsets(x_batch)
         loss = loss_function(output, y_batch)
@@ -55,16 +55,21 @@ for epoch in range(epochs):
         optimizer.step()
         train_loss += loss.item() * output.size(0)
         count += output.size(0)
-    
-    print('Epoch: {:04d}'.format(epoch+1),
-          'loss_train: {:.4f}'.format(train_loss / count),
-          'time: {:.4f}s'.format(time.time() - t))
+
+    print(
+        "Epoch: {:04d}".format(epoch + 1),
+        "loss_train: {:.4f}".format(train_loss / count),
+        "time: {:.4f}s".format(time.time() - t),
+    )
 
 # Stores DeepSets model into disk
-torch.save({
-    'state_dict': deepsets.state_dict(),
-    'optimizer' : optimizer.state_dict(),
-}, 'model_deepsets.pth.tar')
+torch.save(
+    {
+        "state_dict": deepsets.state_dict(),
+        "optimizer": optimizer.state_dict(),
+    },
+    "model_deepsets.pth.tar",
+)
 
 print("Finished training for DeepSets model")
 print()
@@ -78,18 +83,18 @@ loss_function = nn.L1Loss()
 for epoch in range(epochs):
     t = time.time()
     lstm.train()
-     
+
     train_loss = 0
     count = 0
     idx = np.random.permutation(n_train)
     for i in range(0, n_train, batch_size):
-    
+
         ############## Task 5
-        
+
         ##################
         # your code here #
         ##################
-        
+
         optimizer.zero_grad()
         output = lstm(x_batch)
         loss = loss_function(output, y_batch)
@@ -97,15 +102,20 @@ for epoch in range(epochs):
         optimizer.step()
         train_loss += loss.item() * output.size(0)
         count += output.size(0)
-    
-    print('Epoch: {:04d}'.format(epoch+1),
-          'loss_train: {:.4f}'.format(train_loss / count),
-          'time: {:.4f}s'.format(time.time() - t))
+
+    print(
+        "Epoch: {:04d}".format(epoch + 1),
+        "loss_train: {:.4f}".format(train_loss / count),
+        "time: {:.4f}s".format(time.time() - t),
+    )
 
 # Stores LSTM model into disk
-torch.save({
-    'state_dict': lstm.state_dict(),
-    'optimizer' : optimizer.state_dict(),
-}, 'model_lstm.pth.tar')
+torch.save(
+    {
+        "state_dict": lstm.state_dict(),
+        "optimizer": optimizer.state_dict(),
+    },
+    "model_lstm.pth.tar",
+)
 
 print("Finished training for LSTM model")

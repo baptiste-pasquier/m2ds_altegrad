@@ -6,11 +6,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class GNN(nn.Module):
     """
     Simple message passing model that consists of 2 message passing layers
     and the sum aggregation function
     """
+
     def __init__(self, input_dim, hidden_dim, dropout, n_class):
         super(GNN, self).__init__()
         self.fc1 = nn.Linear(input_dim, hidden_dim)
@@ -22,18 +24,18 @@ class GNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x_in, adj, idx):
-        
+
         ############## Task 10
-    
+
         ##################
         # your code here #
         ##################
-        
+
         # sum aggregator
         idx = idx.unsqueeze(1).repeat(1, x.size(1))
-        out = torch.zeros(torch.max(idx)+1, x.size(1)).to(x_in.device)
+        out = torch.zeros(torch.max(idx) + 1, x.size(1)).to(x_in.device)
         out = out.scatter_add_(0, idx, x)
-        
+
         ##################
         # your code here #
         ##################

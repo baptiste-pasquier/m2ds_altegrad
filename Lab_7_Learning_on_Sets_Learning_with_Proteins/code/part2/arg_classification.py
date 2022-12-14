@@ -16,13 +16,15 @@ from utils import load_data, normalize_adjacency, sparse_mx_to_torch_sparse_tens
 from model import GNN
 
 # Load graphs
-adj, features, edge_features, y = load_data() 
+adj, features, edge_features, y = load_data()
 
 # Normalize adjacency matrices
 adj = [normalize_adjacency(A) for A in adj]
 
 # Split data into training and test sets
-adj_train, adj_test, features_train, features_test, y_train, y_test = train_test_split(adj, features, y, test_size=0.1)
+adj_train, adj_test, features_train, features_test, y_train, y_test = train_test_split(
+    adj, features, y, test_size=0.1
+)
 
 # Initialize device
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -58,15 +60,15 @@ for epoch in range(epochs):
         features_batch = list()
         idx_batch = list()
         y_batch = list()
-        
+
         # Create tensors
-        for j in range(i, min(N_train, i+batch_size)):
+        for j in range(i, min(N_train, i + batch_size)):
             n = adj_train[j].shape[0]
-            adj_batch.append(adj_train[j]+sp.identity(n))
+            adj_batch.append(adj_train[j] + sp.identity(n))
             features_batch.append(features_train[j])
-            idx_batch.extend([j-i]*n)
+            idx_batch.extend([j - i] * n)
             y_batch.append(y_train[j])
-            
+
         adj_batch = sp.block_diag(adj_batch)
         features_batch = np.vstack(features_batch)
 
@@ -74,7 +76,7 @@ for epoch in range(epochs):
         features_batch = torch.FloatTensor(features_batch).to(device)
         idx_batch = torch.LongTensor(idx_batch).to(device)
         y_batch = torch.LongTensor(y_batch).to(device)
-        
+
         optimizer.zero_grad()
         output = model(features_batch, adj_batch, idx_batch)
         loss = loss_function(output, y_batch)
@@ -84,13 +86,15 @@ for epoch in range(epochs):
         correct += torch.sum(preds.eq(y_batch).double())
         loss.backward()
         optimizer.step()
-    
+
     if epoch % 5 == 0:
-        print('Epoch: {:03d}'.format(epoch+1),
-              'loss_train: {:.4f}'.format(train_loss / count),
-              'acc_train: {:.4f}'.format(correct / count),
-              'time: {:.4f}s'.format(time.time() - t))
-        
+        print(
+            "Epoch: {:03d}".format(epoch + 1),
+            "loss_train: {:.4f}".format(train_loss / count),
+            "acc_train: {:.4f}".format(correct / count),
+            "time: {:.4f}s".format(time.time() - t),
+        )
+
 # Evaluate model
 model.eval()
 test_loss = 0
@@ -102,15 +106,15 @@ for i in range(0, N_test, batch_size):
     features_batch = list()
     idx_batch = list()
     y_batch = list()
-    
+
     # Create tensors
-    for j in range(i, min(N_test, i+batch_size)):
+    for j in range(i, min(N_test, i + batch_size)):
         n = adj_test[j].shape[0]
-        adj_batch.append(adj_test[j]+sp.identity(n))
+        adj_batch.append(adj_test[j] + sp.identity(n))
         features_batch.append(features_test[j])
-        idx_batch.extend([j-i]*n)
+        idx_batch.extend([j - i] * n)
         y_batch.append(y_test[j])
-        
+
     adj_batch = sp.block_diag(adj_batch)
     features_batch = np.vstack(features_batch)
 
@@ -126,6 +130,8 @@ for i in range(0, N_test, batch_size):
     preds = output.max(1)[1].type_as(y_batch)
     correct += torch.sum(preds.eq(y_batch).double())
 
-print('loss_test: {:.4f}'.format(test_loss / count),
-      'acc_test: {:.4f}'.format(correct / count),
-      'time: {:.4f}s'.format(time.time() - t))
+print(
+    "loss_test: {:.4f}".format(test_loss / count),
+    "acc_test: {:.4f}".format(correct / count),
+    "time: {:.4f}s".format(time.time() - t),
+)

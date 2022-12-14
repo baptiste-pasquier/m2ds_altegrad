@@ -5,6 +5,7 @@ Learning on Sets / Learning with Proteins - ALTEGRAD - Dec 2022
 import torch
 import torch.nn as nn
 
+
 class DeepSets(nn.Module):
     def __init__(self, input_dim, embedding_dim, hidden_dim):
         super(DeepSets, self).__init__()
@@ -14,13 +15,13 @@ class DeepSets(nn.Module):
         self.tanh = nn.Tanh()
 
     def forward(self, x):
-        
+
         ############## Task 3
-    
+
         ##################
         # your code here #
         ##################
-        
+
         return x.squeeze()
 
 
@@ -33,11 +34,11 @@ class LSTM(nn.Module):
         self.fc = nn.Linear(hidden_dim, 1)
 
     def forward(self, x):
-        
+
         ############## Task 4
-    
+
         ##################
         # your code here #
         ##################
-        
+
         return x.squeeze()
