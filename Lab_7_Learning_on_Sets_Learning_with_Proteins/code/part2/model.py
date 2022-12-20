@@ -29,6 +29,11 @@ class GNN(nn.Module):
 
         ##################
         # your code here #
+        x = adj @ x_in
+        x = self.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = adj @ x
+        x = self.fc2(x)
         ##################
 
         # sum aggregator
@@ -38,6 +43,10 @@ class GNN(nn.Module):
 
         ##################
         # your code here #
+        out = self.bn(out)
+        out = self.relu(self.fc3(out))
+        out = self.dropout(out)
+        out = self.fc4(out)
         ##################
 
         return F.log_softmax(out, dim=1)

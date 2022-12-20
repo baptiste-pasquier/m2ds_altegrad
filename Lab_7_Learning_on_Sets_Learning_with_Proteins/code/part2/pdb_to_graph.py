@@ -64,6 +64,8 @@ PDB_CODE = "Q5VSL9"
 
 ##################
 # your code here #
+pdb_path, _ = download_alphafold_structure(PDB_CODE)
+G = construct_graph(config=config, pdb_path=pdb_path)
 ##################
 
 # Print number of nodes and number of edges
@@ -75,4 +77,25 @@ print("Number of edges:", G.number_of_edges())
 
 ##################
 # your code here #
+degree_sequence = [G.degree(node) for node in G.nodes()]
+print("The minimum degree of the nodes is", np.min(degree_sequence))
+print("The maximum degree of the nodes is", np.max(degree_sequence))
+print("The median degree of the nodes is", np.median(degree_sequence))
+print("The mean degree of the nodes is", np.mean(degree_sequence))
+
+fig = plot_degree_by_residue_type(G)
+fig.write_image("plot_degree_by_residue_type.pdf")
+
+fig = plot_edge_type_distribution(G)
+fig.write_image("plot_edge_type_distribution.pdf")
+
+fig = plot_residue_composition(G)
+fig.write_image("plot_residue_composition.pdf")
+
+plot_protein_structure_graph(
+    G,
+    node_size_multiplier=1,
+    label_node_ids=False,
+    out_path="plot_protein_structure_graph.png",
+)
 ##################

@@ -25,6 +25,8 @@ fairseq = "^0.12.2"
 transformers = "^4.23.1"
 ipywidgets = ">=7.0,<8.0"
 sentencepiece = "^0.1.97"
+graphein = "^1.5.2"
+kaleido = "^0.2.1"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^5.0.4"
